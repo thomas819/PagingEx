@@ -5,8 +5,7 @@ import io.reactivex.Single
 import retrofit2.http.*
 
 interface Api{
-
     @GET("/search/repositories")
-    fun search(@FieldMap params : MutableMap<String, String>): Single<RepoResponse>
+    fun search(@QueryMap params : MutableMap<String, Any>, @Query("page") page:Int): Single<RepoResponse>
 
 }

@@ -9,6 +9,7 @@ import com.thomas.pagingstudy.databinding.ActivityMainBinding
 import com.thomas.pagingstudy.ui.BindingActivity
 import com.thomas.pagingstudy.ui.network.NetworkPagingActivity
 import com.thomas.pagingstudy.ui.networkroom.RoomNetworkPagingActivity
+import kotlinx.coroutines.GlobalScope
 import org.koin.android.ext.android.inject
 
 class MainActivity : BindingActivity<ActivityMainBinding>() {
@@ -23,6 +24,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>() {
         binding.vm = mainViewModel
         binding.lifecycleOwner = this
         event()
+
     }
 
     private fun event() {
