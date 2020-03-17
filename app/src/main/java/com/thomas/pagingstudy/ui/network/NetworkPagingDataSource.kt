@@ -62,7 +62,6 @@ class NetworkPagingDataSource(private val api: Api, private val param:MutableMap
         disposable+=api.search(param,params.key)
                 .doOnSubscribe {
                     networkState.postValue(NetworkState.LOADING)
-                    initialLoad.postValue(NetworkState.LOADING)
                 }
                 .subscribeOn(Schedulers.io())
                 .subscribe({

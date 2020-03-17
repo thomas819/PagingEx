@@ -7,6 +7,7 @@ import androidx.paging.LivePagedListBuilder
 import com.thomas.pagingstudy.core.BaseViewModel
 import com.thomas.pagingstudy.data.remote.api.Api
 import com.thomas.pagingstudy.data.remote.domain.Item
+import com.thomas.pagingstudy.util.NetworkState
 import com.thomas.pagingstudy.util.pagedListConfig
 import io.reactivex.disposables.CompositeDisposable
 
@@ -20,29 +21,28 @@ class NetworkPagingViewModel(private val api: Api) : BaseViewModel() {
     private val param = mutableMapOf<String, Any>().apply {
         this["q"] = "$query+language:kotlin"
         this["sort"] = "stars"
-        this["per_page"]=10
+        this["per_page"] = 10
     }
 
-    private val source= NetworkPagingDataSourceFactory(api,param,getDisposable())
+    val source = NetworkPagingDataSourceFactory(api, param, getDisposable())
 
-    val data = LivePagedListBuilder(source,pagedListConfig()).build()
+    val data = LivePagedListBuilder(source, pagedListConfig()).build()
 
     fun doSearch() {
-
+        //source.sourceLiveData.value?.networkState?.value
     }
 
-    fun retry(){
+    fun retry() {
         source.sourceLiveData.value?.retryAllFailed()
     }
 
-    fun refresh(){
+    fun refresh() {
         source.sourceLiveData.value?.invalidate()
     }
 
     fun onQueryChange(query: CharSequence) {
         this.query = query.toString()
     }
-
 
 
 }

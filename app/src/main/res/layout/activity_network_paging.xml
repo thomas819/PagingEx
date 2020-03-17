@@ -2,7 +2,9 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
     <data>
+
         <variable
             name="vm"
             type="com.thomas.pagingstudy.ui.network.NetworkPagingViewModel" />
@@ -13,18 +15,25 @@
         android:layout_height="match_parent"
         tools:context=".ui.network.NetworkPagingActivity">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/network_paging_rv"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:viewModel="@{vm}"
-            app:items="@{vm.data}"
-            tools:listitem="@layout/item_network_paging"
-            tools:itemCount="5"/>
+            app:onRefreshListener="@{()->vm.refresh()}"
+            app:refreshing="@{vm.source.sourceLiveData.initialLoad}">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/network_paging_rv"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                app:items="@{vm.data}"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:viewModel="@{vm}"
+                tools:itemCount="5"
+                tools:listitem="@layout/item_network_paging" />
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/network_paging_fa"
@@ -32,9 +41,7 @@
             android:layout_height="wrap_content"
             android:clickable="true"
             app:fabSize="normal"
-            app:layout_constraintBottom_toBottomOf="@+id/network_paging_rv"
             app:layout_constraintEnd_toEndOf="parent" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
