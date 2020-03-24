@@ -18,18 +18,18 @@ class NetworkPagingViewModel(private val api: Api) : BaseViewModel() {
     private val _items = MutableLiveData<List<Item>?>()
     val items: MutableLiveData<List<Item>?> get() = _items
 
+    val source : NetworkPagingDataSourceFactory by lazy {  NetworkPagingDataSourceFactory(api, param, getDisposable()) }
+
     private val param = mutableMapOf<String, Any>().apply {
         this["q"] = "$query+language:kotlin"
         this["sort"] = "stars"
         this["per_page"] = 10
     }
 
-    val source = NetworkPagingDataSourceFactory(api, param, getDisposable())
-
     val data = LivePagedListBuilder(source, pagedListConfig()).build()
 
-    fun doSearch() {
-        //source.sourceLiveData.value?.networkState?.value
+    fun networkState(): MutableLiveData<NetworkState>? {
+        return source.sourceLiveData.value?.networkState
     }
 
     fun retry() {
@@ -42,6 +42,7 @@ class NetworkPagingViewModel(private val api: Api) : BaseViewModel() {
 
     fun onQueryChange(query: CharSequence) {
         this.query = query.toString()
+        print("@@${query.toString()}")
     }
 
 

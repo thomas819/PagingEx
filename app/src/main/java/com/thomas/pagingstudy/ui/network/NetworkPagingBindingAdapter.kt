@@ -4,11 +4,15 @@ import androidx.databinding.BindingAdapter
 import androidx.paging.PagedList
 import androidx.recyclerview.widget.RecyclerView
 import com.thomas.pagingstudy.data.remote.domain.Item
+import com.thomas.pagingstudy.util.NetworkState
 
-@BindingAdapter(value = ["items", "viewModel"])
-fun setNetworkPaging(view: RecyclerView, items: PagedList<Item>?, vm: NetworkPagingViewModel) {
+@BindingAdapter(value = ["items", "viewModel","networkState"])
+fun setNetworkPaging(view: RecyclerView, items: PagedList<Item>?, vm: NetworkPagingViewModel,networkState:NetworkState?) {
     view.adapter?.run {
-        if(this is NetworkPagingAdapter) this.submitList(items)
+        if(this is NetworkPagingAdapter) {
+            setNetworkState(networkState)
+            submitList(items)
+        }
     } ?: run{
         NetworkPagingAdapter(vm).apply {
             view.adapter = this

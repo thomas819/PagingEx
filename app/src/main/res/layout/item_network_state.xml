@@ -10,6 +10,9 @@
         <variable
             name="NetworkState"
             type="com.thomas.pagingstudy.util.NetworkState" />
+        <variable
+            name="vm"
+            type="com.thomas.pagingstudy.ui.network.NetworkPagingViewModel" />
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -24,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:text="@{NetworkState.msg}"
-            android:visibility="@{NetworkState.msg != null}" />
+            android:visibility="@{NetworkState.msg != null ? View.VISIBLE : View.INVISIBLE}" />
 
         <ProgressBar
             android:id="@+id/progress_bar"
@@ -32,7 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:visibility="@{NetworkState.status == Status.RUNNING ? View.VISIBLE:View.INVISIBLE}" />
+            android:visibility="@{NetworkState.status == Status.RUNNING ? View.VISIBLE : View.INVISIBLE}" />
 
         <Button
             android:id="@+id/retry_button"
@@ -41,6 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="재시도"
-            android:visibility="@{NetworkState.status==Status.FAILED}" />
+            android:onClick="@{()->vm.retry()}"
+            android:visibility="@{NetworkState.status==Status.FAILED ? View.VISIBLE : View.INVISIBLE}" />
     </LinearLayout>
 </layout>
