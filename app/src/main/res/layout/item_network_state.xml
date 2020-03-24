@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <import type="com.thomas.pagingstudy.util.NetworkState.Status" />
+
+        <import type="android.view.View" />
+
+        <variable
+            name="NetworkState"
+            type="com.thomas.pagingstudy.util.NetworkState" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <TextView
+            android:id="@+id/error_msg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@{NetworkState.msg}"
+            android:visibility="@{NetworkState.msg != null}" />
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="@{NetworkState.status == Status.RUNNING ? View.VISIBLE:View.INVISIBLE}" />
+
+        <Button
+            android:id="@+id/retry_button"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="재시도"
+            android:visibility="@{NetworkState.status==Status.FAILED}" />
+    </LinearLayout>
+</layout>
